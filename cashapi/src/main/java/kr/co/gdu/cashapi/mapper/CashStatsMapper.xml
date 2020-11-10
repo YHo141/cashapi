@@ -23,4 +23,12 @@
 		AND cashbook_kind = "지출"
 		GROUP BY Year(cashbook_date)
 	</select>
+	<select id="selectTotalOutAndInByYear" parameterType="int" resultType="java.util.Map">
+		SELECT YEAR(cashbook_date) '년',
+			sum(case when cashbook_kind='수입' then cashbook_price END) '수입',
+			sum(case when cashbook_kind='지출' then cashbook_price END) '지출'
+		FROM cashbook
+		WHERE YEAR(cashbook_date) = #{year}
+		GROUP BY Year(cashbook_date)
+	</select>
 </mapper>
